@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Protein Database</title>
+</head>
+
+<body>
+
+    <h2>Protein Database Application</h2>
+
+    <form id="proteinForm">
+
+        <label>Protein Name</label>
+        <br>
+        <input type="text" id="protein_name" required>
+
+        <br><br>
+
+        <label>Function</label>
+        <br>
+        <input type="text" id="protein_function" required>
+
+        <br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <script>
+
+        document
+            .getElementById("proteinForm")
+            .addEventListener("submit", async function (e) {
+
+                e.preventDefault();
+
+                const protein_name =
+                    document.getElementById("protein_name").value;
+
+                const protein_function =
+                    document.getElementById("protein_function").value;
+
+                const response =
+                    await fetch("/add-protein", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            protein_name,
+                            protein_function
+                        })
+                    });
+
+                const result =
+                    await response.text();
+
+                document.getElementById("message")
+                    .innerText = result;
+
+            });
+
+    </script>
+
+</body>
+
+</html>
