@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fetch Genes</title>
+</head>
+
+<body>
+
+    <h2>Stored Genes</h2>
+
+    <button onclick="loadGenes()">
+        Load Genes
+    </button>
+
+    <div id="geneList"></div>
+
+    <script>
+
+        async function loadGenes() {
+
+            const response =
+                await fetch("/genes");
+
+            const genes =
+                await response.json();
+
+            let output = "";
+
+            genes.forEach(gene => {
+
+                output += `
+                    <p>
+                        ${gene.gene_name} :
+                        ${gene.sequence}
+                    </p>
+                `;
+
+            });
+
+            document
+                .getElementById("geneList")
+                .innerHTML = output;
+        }
+
+    </script>
+
+</body>
+
+</html>
