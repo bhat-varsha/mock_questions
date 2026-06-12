@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gene Mutation Entry</title>
+</head>
+<body>
+    <h2>Gene Mutation Entry System</h2>
+    <p> Develop a Gene Mutation Entry System. Frontend should collect:
+
+Gene Name
+Mutation Type
+Backend should:
+
+create a route /add-mutation
+insert records into SQLite table mutation</p>
+
+    <form id="mutationForm">
+        <label>Gene Name</label>
+        <input type="text" id="gene_name" required>
+        <br><br>
+        <label>Mutation Type</label>
+        <input type="text" id="mutation_type" required>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        document.getElementById("mutationForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const gene_name =
+                    document.getElementById("gene_name").value;
+
+                const mutation_type =
+                    document.getElementById("mutation_type").value;
+
+                const response =
+                    await fetch("/add-mutation", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            gene_name,
+                            mutation_type
+                        })
+                    });
+
+                const result =
+                    await response.text();
+
+                document.getElementById("message")
+                    .innerText = result;
+
+            });
+
+    </script>
+
+</body>
+
+</html>
