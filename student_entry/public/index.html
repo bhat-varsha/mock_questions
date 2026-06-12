@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><title>Student Entry</title></head>
+<body>
+    <h2>Student Entry Form</h2>
+    <p> Create a webpage that accepts: Student Name, Register Number
+        Using JS script(), send the data to an express backend using a POST request.
+        The backend should:
+        store the data in sqlite
+        return “Student Added Successfully”
+    </p>
+    <form id="studentForm">
+        <label>Student Name</label>
+        <input type="text" id="name" required>
+        <br><br>
+        <label>Register Number</label>
+        <input type="text" id="regno" required>
+
+        <button type="submit"> Submit</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        document.getElementById("studentForm") .addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const name = document.getElementById("name").value;
+                const regno = document.getElementById("regno").value;
+                const response =
+                    await fetch("/add-student", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name,
+                            regno
+                        })
+                    });
+                const result =
+                    await response.text();
+                document.getElementById("message")
+                    .innerText = result;
+            });
+    </script>
+</body>
+</html>
